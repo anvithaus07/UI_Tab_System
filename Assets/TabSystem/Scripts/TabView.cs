@@ -27,8 +27,9 @@ public class TabView : MonoBehaviour
 
     private TabButton mCurrentSelectedTabView;
     int mPageNumber = 2;
+    public float kSelectedTabWidthExpand = 0.8f;
 
-    
+
     private IEnumerator Start()
     {
         for (int i = 0; i < m_tabPages.Count; i++)
@@ -88,25 +89,32 @@ public class TabView : MonoBehaviour
 
     void ShowTabViewFor(TabButton button)
     {
-        if (button != null)
+        if (mCurrentSelectedTabView == null || mCurrentSelectedTabView != button)
         {
+
             if (mCurrentSelectedTabView != null)
                 mCurrentSelectedTabView.SetDeselectedState();
 
             mCurrentSelectedTabView = button;
 
             mCurrentSelectedTabView.SetSelectedState();
-        }
 
-        HideTabView(mPageNumber);
-        mPageNumber = (int)button.TabType;
-        MoveTabSelector(button.GetComponent<RectTransform>().anchoredPosition.x);
-        ActivateTabView(mPageNumber);
+
+            HideTabView(mPageNumber);
+            mPageNumber = (int)button.TabType;
+            StartCoroutine(MoveTabSelector(button, button.GetComponent<RectTransform>().sizeDelta.x));
+            ActivateTabView(mPageNumber);
+        }
     }
 
-    void MoveTabSelector(float xPos)
+    IEnumerator MoveTabSelector(TabButton button, float width)
     {
-        Vector2 endPos = new Vector2(xPos, m_tabSelectedBg.anchoredPosition.y);
+        yield return new WaitForEndOfFrame();
+
+        float newWidth = (width / 100f) * (kSelectedTabWidthExpand * 100f);
+        m_tabSelectedBg.sizeDelta = new Vector2(width + newWidth, m_tabSelectedBg.sizeDelta.y);
+        Vector2 endPos = new Vector2(button.GetComponent<RectTransform>().anchoredPosition.x, m_tabSelectedBg.anchoredPosition.y);
+
         m_tabSelectedBg.DOAnchorPos(endPos, 0.3f);
     }
 }

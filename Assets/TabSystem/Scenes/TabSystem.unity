@@ -689,7 +689,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 540033f6cd1146b4fa90d8257507027c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0
   m_tabPages:
   - {fileID: 325798159}
   - {fileID: 1200913473}
@@ -714,6 +713,7 @@ MonoBehaviour:
   - {fileID: 1570052771}
   - {fileID: 2131617143}
   m_tabSelectedBg: {fileID: 728625053}
+  kSelectedTabWidthExpand: 0.8
 --- !u!1 &728625052
 GameObject:
   m_ObjectHideFlags: 0

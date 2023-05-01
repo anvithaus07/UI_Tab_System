@@ -12,6 +12,7 @@ public class TabButton : MonoBehaviour, IPointerClickHandler
     [SerializeField] private GameObject selectedState;
     [SerializeField] private GameObject deslectedState;
     [SerializeField] private Tabs m_tabType;
+    [SerializeField] private LayoutElement m_layoutElement;
 
     TabView tabView;
 
@@ -29,12 +30,14 @@ public class TabButton : MonoBehaviour, IPointerClickHandler
         deslectedState.SetActive(false);
 
         selectedState.transform.DOScale(Vector3.one, 0.4f).SetEase(Ease.InOutBack);
+        m_layoutElement.flexibleWidth = 1.0f + tabView.kSelectedTabWidthExpand;
     }
     public void SetDeselectedState()
     {
         deslectedState.SetActive(true);
         selectedState.SetActive(false);
         selectedState.transform.localScale = Vector3.zero;
+        m_layoutElement.flexibleWidth = 1.0f;
     }
 
     public void OnPointerClick(PointerEventData eventData)
