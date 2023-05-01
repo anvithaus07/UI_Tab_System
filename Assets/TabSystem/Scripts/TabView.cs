@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public enum Tabs
 {
@@ -98,13 +99,13 @@ public class TabView : MonoBehaviour
 
         HideTabView(mPageNumber);
         mPageNumber = (int)button.TabType;
-        Debug.Log("Position is : " + button.transform.position + "  localPosition: " + button.transform.localPosition + "  anchoredPosition : " + button.GetComponent<RectTransform>().anchoredPosition);
-        m_tabSelectedBg.anchoredPosition =new Vector2( button.GetComponent<RectTransform>().anchoredPosition.x, m_tabSelectedBg.anchoredPosition.y);
+        MoveTabSelector( button.GetComponent<RectTransform>().anchoredPosition.x);
         ActivateTabView(mPageNumber);
     }
 
-    void MoveTabSelector()
+    void MoveTabSelector(float xPos)
     {
-
+        Vector2 endPos = new Vector2(xPos, m_tabSelectedBg.anchoredPosition.y);
+        m_tabSelectedBg.DOAnchorPos(endPos, 0.5f);
     }
 }
