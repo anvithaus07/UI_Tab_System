@@ -2,6 +2,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
 
 public enum Tabs
 {
@@ -28,7 +29,7 @@ public class TabView : MonoBehaviour
     int mPageNumber = 2;
 
     
-    private void Start()
+    private IEnumerator Start()
     {
         for (int i = 0; i < m_tabPages.Count; i++)
         {
@@ -38,7 +39,7 @@ public class TabView : MonoBehaviour
         {
             m_tabButtons[i].Subscribe(this, m_tabPageData[i].PageText);
         }
-        Debug.Log("Start of function " + mPageNumber);
+        yield return new WaitForSeconds(0.1f);
         ShowTabViewFor(m_tabButtons[mPageNumber]);
     }
     #region Tab Page View
@@ -99,13 +100,13 @@ public class TabView : MonoBehaviour
 
         HideTabView(mPageNumber);
         mPageNumber = (int)button.TabType;
-        MoveTabSelector( button.GetComponent<RectTransform>().anchoredPosition.x);
+        MoveTabSelector(button.GetComponent<RectTransform>().anchoredPosition.x);
         ActivateTabView(mPageNumber);
     }
 
     void MoveTabSelector(float xPos)
     {
         Vector2 endPos = new Vector2(xPos, m_tabSelectedBg.anchoredPosition.y);
-        m_tabSelectedBg.DOAnchorPos(endPos, 0.5f);
+        m_tabSelectedBg.DOAnchorPos(endPos, 0.3f);
     }
 }

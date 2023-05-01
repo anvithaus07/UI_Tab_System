@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
-
+using DG.Tweening;
 [RequireComponent(typeof(Button))]
 public class TabButton : MonoBehaviour, IPointerClickHandler
 {
@@ -14,8 +14,8 @@ public class TabButton : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Tabs m_tabType;
 
     TabView tabView;
-    
 
+  
     public void Subscribe(TabView tabView,string tabName)
     {
         this.tabView = tabView;
@@ -27,11 +27,14 @@ public class TabButton : MonoBehaviour, IPointerClickHandler
     {
         selectedState.SetActive(true);
         deslectedState.SetActive(false);
+
+        selectedState.transform.DOScale(Vector3.one, 0.4f).SetEase(Ease.InOutBack);
     }
     public void SetDeselectedState()
     {
         deslectedState.SetActive(true);
         selectedState.SetActive(false);
+        selectedState.transform.localScale = Vector3.zero;
     }
 
     public void OnPointerClick(PointerEventData eventData)
